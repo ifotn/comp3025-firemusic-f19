@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">FireMusic</string>
     <string name="save">Save to Firebase</string>
+    <string name="artist_name">Enter Artist Name</string>
+    <array name="genres">
+        <item name="indie">Indie</item>
+        <item name="pop">Pop</item>
+        <item name="rock">Rock</item>
+    </array>
 </resources>
