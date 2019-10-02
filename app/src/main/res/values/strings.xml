@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FireMusic</string>
+    <string name="save">Save to Firebase</string>
+</resources>

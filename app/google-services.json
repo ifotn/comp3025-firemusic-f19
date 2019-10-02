@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "712547170153",
+    "firebase_url": "https://firemusic-e5196.firebaseio.com",
+    "project_id": "firemusic-e5196",
+    "storage_bucket": "firemusic-e5196.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712547170153:android:7e47f0b30e98324508eff8",
+        "android_client_info": {
+          "package_name": "com.infrontofthenet.firemusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712547170153-9mv43350fsp2qvklctvkif05vr5fi6o2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infrontofthenet.firemusic",
+            "certificate_hash": "eb617df09c7a78cc82bad20aeb130c2289a6b39f"
+          }
+        },
+        {
+          "client_id": "712547170153-004r1hhclcusuvtvi4je8f9tmua6ls3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2T-IKyVfNyi9vakeRDFaXAxwMuS4STPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712547170153-004r1hhclcusuvtvi4je8f9tmua6ls3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
