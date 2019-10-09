@@ -5,9 +5,9 @@ class Artist {
     var artistName: String? = null
     var artistGenre: String? = null
 
-    // required empty constructor - we may need to re-enable this later
-    //constructor() {
-    //}
+    // required empty constructor - not needed to add, but needed to read
+    constructor() {
+    }
 
     // 1st overload w/all properties passed in
     constructor(artistId: String, artistName: String, artistGenre: String) {
