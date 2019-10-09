@@ -59,14 +59,15 @@ class ArtistList : AppCompatActivity() {
     private inner class ArtistViewHolder internal constructor(private val view: View) :
         RecyclerView.ViewHolder(view) {
 
-        internal fun displayArtist(artistName: String, artistGenre: String) {
-            // populate the corresponding textViews in the layout template inflated when adapter created below
-            val textViewName = view.findViewById<TextView>(R.id.textViewName)
-            val textViewGenre = view.findViewById<TextView>(R.id.textViewGenre)
-
-            textViewName.text = artistName
-            textViewGenre.text = artistGenre
-        }
+        // not needed if we bind to the item template directly on the onBindViewHolder method below
+//        internal fun displayArtist(artistName: String, artistGenre: String) {
+//            // populate the corresponding textViews in the layout template inflated when adapter created below
+//            val textViewName = view.findViewById<TextView>(R.id.textViewName)
+//            val textViewGenre = view.findViewById<TextView>(R.id.textViewGenre)
+//
+//            textViewName.text = artistName
+//            textViewGenre.text = artistGenre
+//        }
     }
 
     private inner class ArtistAdapter internal constructor(options: FirestoreRecyclerOptions<Artist>) :
@@ -75,7 +76,9 @@ class ArtistList : AppCompatActivity() {
 
         override fun onBindViewHolder(p0: ArtistViewHolder, p1: Int, p2: Artist) {
             // pass current Artist values to the display function above
-            p0.displayArtist(p2.artistName.toString(), p2.artistGenre.toString())
+            //p0.displayArtist(p2.artistName.toString(), p2.artistGenre.toString()) - replaced by 2 lines below
+            p0.itemView.findViewById<TextView>(R.id.textViewName).text = p2.artistName
+            p0.itemView.findViewById<TextView>(R.id.textViewGenre).text = p2.artistGenre
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
