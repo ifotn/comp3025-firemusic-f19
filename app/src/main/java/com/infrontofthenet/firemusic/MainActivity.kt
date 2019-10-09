@@ -1,5 +1,6 @@
 package com.infrontofthenet.firemusic
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        buttonList.setOnClickListener {
+            val intent = Intent(applicationContext, ArtistList::class.java)
+            startActivity(intent)
+        }
 
         buttonSave.setOnClickListener {
             // get the user inputs
@@ -58,6 +64,8 @@ class MainActivity : AppCompatActivity() {
                 spinnerGenres.setSelection(0)
                 Toast.makeText(this, "Artist Added", Toast.LENGTH_LONG).show()
             }
+
+
 
             // hardcoded example from firebase assistant
 //            // Create a new user with a first and last name

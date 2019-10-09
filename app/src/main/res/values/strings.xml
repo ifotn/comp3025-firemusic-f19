@@ -2,6 +2,8 @@
     <string name="app_name">FireMusic</string>
     <string name="save">Save to Firebase</string>
     <string name="artist_name">Enter Artist Name</string>
+    <string name="artist_list_heading">Artists</string>
+    <string name="view_artists">View Artists</string>
     <array name="genres">
         <item name="indie">Indie</item>
         <item name="pop">Pop</item>
