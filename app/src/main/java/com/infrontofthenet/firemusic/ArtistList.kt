@@ -1,10 +1,13 @@
 package com.infrontofthenet.firemusic
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,6 +82,13 @@ class ArtistList : AppCompatActivity() {
             //p0.displayArtist(p2.artistName.toString(), p2.artistGenre.toString()) - replaced by 2 lines below
             p0.itemView.findViewById<TextView>(R.id.textViewName).text = p2.artistName
             p0.itemView.findViewById<TextView>(R.id.textViewGenre).text = p2.artistGenre
+
+            p0.itemView.setOnClickListener {
+                val url = p2.url.toString()
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {

@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
                 // get new document with unique id
                 val tbl = db.collection("artists")
                 val id = tbl.document().getId()
-
+                var url: String? = null
                 // create and populate new Artist object
-                val artist = Artist(id, name, genre)
+                val artist = Artist(id, name, genre, url)
 
                 // or call empty constructor and populate properties individually
 //                var artist = Artist()
