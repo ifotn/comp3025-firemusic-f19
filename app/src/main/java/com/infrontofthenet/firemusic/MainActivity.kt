@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -108,6 +109,11 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(applicationContext, SignInActivity::class.java)
                     startActivity(intent)
                 }
+        }
+
+        fabProfile.setOnClickListener {
+            val intent = Intent(applicationContext, ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 }
