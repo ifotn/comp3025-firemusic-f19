@@ -25,6 +25,7 @@ class SignInActivity : AppCompatActivity() {
                 startActivityForResult(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
                         .setAvailableProviders(providers)
                         .build(),
                     RC_SIGN_IN)
@@ -41,7 +42,10 @@ class SignInActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
-                // ...
+
+                // redirect to MainActivity
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check

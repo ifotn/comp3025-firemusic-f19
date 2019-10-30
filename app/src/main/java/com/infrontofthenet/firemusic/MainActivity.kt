@@ -15,6 +15,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.android.gms.tasks.OnSuccessListener
 //import javax.swing.UIManager.put
 import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,16 @@ class MainActivity : AppCompatActivity() {
     // connect to firestore
     var db = FirebaseFirestore.getInstance()
 
+    override fun onStart() {
+        super.onStart()
+
+        // check for authenticated user
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            val intent = Intent(applicationContext, SignInActivity::class.java)
+            startActivity(intent)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -85,6 +97,17 @@ class MainActivity : AppCompatActivity() {
 //                .addOnFailureListener { e ->
 //                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
 //                }
+        }
+
+        fabExit.setOnClickListener {
+            // log user out
+            AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener {
+                    // redirect to SignInActivity
+                    val intent = Intent(applicationContext, SignInActivity::class.java)
+                    startActivity(intent)
+                }
         }
     }
 }

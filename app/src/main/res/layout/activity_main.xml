@@ -42,4 +42,13 @@
         app:layout_constraintEnd_toEndOf="@id/buttonSave"
         app:layout_constraintTop_toBottomOf="@id/buttonSave" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@mipmap/ic_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
