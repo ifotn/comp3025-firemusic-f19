@@ -4,9 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,9 +26,36 @@ class ArtistList : AppCompatActivity() {
     // Kotlin equivalent of Java ArrayList class. We decided we don't need this after all
     //private var artistList = mutableListOf<Artist>()
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // inflate the menu_main to add the items to the toolbar
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.action_main -> {
+                 startActivity(Intent(applicationContext, MainActivity::class.java))
+                return true
+            }
+            R.id.action_list -> {
+                // do nothing, already on this activity
+                return true
+            }
+            R.id.action_profile -> {
+                startActivity(Intent(applicationContext, ProfileActivity::class.java))
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_artist_list)
+
+        // instantiate toolbar
+        setSupportActionBar(toolbar)
 
         // recycler will have linear layout
         recyclerViewArtists.setLayoutManager(LinearLayoutManager(this))

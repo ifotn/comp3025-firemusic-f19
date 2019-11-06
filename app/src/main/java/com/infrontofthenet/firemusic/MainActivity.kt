@@ -8,6 +8,8 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.annotation.NonNull
 import com.google.android.gms.tasks.OnFailureListener
@@ -35,14 +37,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 2 overrides to display menu and handle menu events
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // inflate the menu_main to add the items to the toolbar
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.action_main -> {
+                // already on main activity so do nothing
+                return true
+            }
+            R.id.action_list -> {
+                startActivity(Intent(applicationContext, ArtistList::class.java))
+                return true
+            }
+            R.id.action_profile -> {
+                startActivity(Intent(applicationContext, ProfileActivity::class.java))
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttonList.setOnClickListener {
-            val intent = Intent(applicationContext, ArtistList::class.java)
-            startActivity(intent)
-        }
+        // toolbar
+        setSupportActionBar(toolbar)
+
+//        buttonList.setOnClickListener {
+//            val intent = Intent(applicationContext, ArtistList::class.java)
+//            startActivity(intent)
+//        }
 
         buttonSave.setOnClickListener {
             // get the user inputs
@@ -111,9 +141,9 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
-        fabProfile.setOnClickListener {
-            val intent = Intent(applicationContext, ProfileActivity::class.java)
-            startActivity(intent)
-        }
+//        fabProfile.setOnClickListener {
+//            val intent = Intent(applicationContext, ProfileActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 }
