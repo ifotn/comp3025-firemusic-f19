@@ -23,7 +23,7 @@
         <activity android:name=".ArtistList" />
         <activity android:name=".MainActivity"></activity>
         <provider
-            android:authorities="$(applicationId).provider"
+            android:authorities="${applicationId}.provider"
             android:name="androidx.core.content.FileProvider"
             android:enabled="true"
             android:exported="false"

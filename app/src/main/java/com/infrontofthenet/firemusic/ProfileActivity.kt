@@ -2,6 +2,7 @@ package com.infrontofthenet.firemusic
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -71,14 +72,14 @@ class ProfileActivity : AppCompatActivity() {
         imageViewProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo))
 
         imageViewProfile.setOnClickListener {
-            if (checkPermission()) {
+            //if (checkPermission()) {
                 // permission already granted
                 takePicture()
-            }
-            else {
-                // permission not granted so ask
-                requestPermission()
-            }
+//            }
+//            else {
+//                // permission not granted so ask
+//                requestPermission()
+//            }
         }
 
         // enable scrolling on terms textView since it only shows 10 lines at a time
@@ -151,6 +152,20 @@ class ProfileActivity : AppCompatActivity() {
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // if user invoked the camera and the activity was successful (RESULT_OK: -1)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageUri: Uri? = Uri.parse(currentPath)
+
+            // display the image if we found one
+            if (imageUri != null) {
+                imageViewProfile.setImageURI(imageUri)
+            }
+        }
     }
 
     // create the image in storage
