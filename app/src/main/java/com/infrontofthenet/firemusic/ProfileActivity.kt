@@ -44,6 +44,10 @@ class ProfileActivity : AppCompatActivity() {
         // toolbar
         setSupportActionBar(toolbar)
 
+        // default profile image
+        // set default image
+        imageViewProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo))
+
         // enable scrolling on terms textView since it only shows 10 lines at a time
         textViewTerms.movementMethod = ScrollingMovementMethod()
 
