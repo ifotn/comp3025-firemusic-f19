@@ -39,7 +39,8 @@
         android:id="@+id/imageViewProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewEmail" />
+        app:layout_constraintTop_toBottomOf="@id/textViewEmail"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
