@@ -29,9 +29,7 @@ import com.google.firebase.auth.UserProfileChangeRequest
 //import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.fabExit
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -78,9 +76,17 @@ class ProfileActivity : AppCompatActivity() {
         // toolbar
         setSupportActionBar(toolbar)
 
-        // default profile image
-        // set default image
-        imageViewProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo))
+        // default profile image - try first to get from firebase profile
+        var profilePhoto: Uri? = user!!.photoUrl
+
+        if (profilePhoto != null) {
+            var path = profilePhoto.path
+            loadImageFromInternalStorage(path!!)
+        }
+        else {
+            // set default image
+            imageViewProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo))
+        }
 
         imageViewProfile.setOnClickListener {
             //if (checkPermission()) {
@@ -180,8 +186,10 @@ class ProfileActivity : AppCompatActivity() {
                 var bitmap: Bitmap = BitmapFactory.decodeFile(currentPath)
                 var path = saveToInternalStorage(bitmap)
 
-                // try saving to user's profile too
-                saveProfilePhoto(imageUri)
+                // try saving to user's profile too by converting the local bitmap to a uri
+                var builder = Uri.Builder()
+                var localUri = builder.appendPath(path).build()
+                saveProfilePhoto(localUri)
             }
             catch (e:IOException) {
                 Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
@@ -265,5 +273,21 @@ class ProfileActivity : AppCompatActivity() {
                     }
                 }
             }}
+    }
+
+    // get local profile.jpg if any
+    private fun loadImageFromInternalStorage(path: String) {
+        try {
+            var file: File = File(path, "profile.jpg")
+
+            // convert to bitmap
+            var bitmapImage = BitmapFactory.decodeStream(FileInputStream(file))
+
+            // render in the imageview
+            imageViewProfile.setImageBitmap(bitmapImage)
+        }
+        catch (e: FileNotFoundException) {
+            Toast.makeText(this, "Could not load profile photo", Toast.LENGTH_LONG).show()
+        }
     }
 }
