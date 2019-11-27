@@ -120,6 +120,11 @@ class ProfileActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
         }
+
+        fabLocation.setOnClickListener {
+            val intent = Intent(applicationContext, MapsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     // has user already allowed the app to use camera & storage?
