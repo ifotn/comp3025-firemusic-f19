@@ -3,8 +3,12 @@ package com.infrontofthenet.firemusic
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.fabExit
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -165,6 +171,17 @@ class ProfileActivity : AppCompatActivity() {
             if (imageUri != null) {
                 imageViewProfile.setImageURI(imageUri)
             }
+
+            // try to save a copy to app's internal storage
+            try {
+                var bitmap: Bitmap = BitmapFactory.decodeFile(currentPath)
+                var path = saveToInternalStorage(bitmap)
+
+                // try saving to user's profile too
+            }
+            catch (e:IOException) {
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -195,5 +212,35 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, SignInActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    // save a copy of photo to app's internal storage to avoid cross-application permission problems
+    private fun saveToInternalStorage(bitmapImage: Bitmap) : String {
+        // set up private image directory for our app
+        var cw = ContextWrapper(getApplicationContext())
+        var directory: File = cw.getDir("imageDir", Context.MODE_PRIVATE)
+
+        // always save the local file copy as "profile.jpg"
+        var path: File = File(directory, "profile.jpg")
+        var fos: FileOutputStream? = null
+
+        // use the stream to write a copy of the image file
+        try {
+            fos = FileOutputStream(path)
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        }
+        catch (e:Exception) {
+            Toast.makeText(this, "Could not save file", Toast.LENGTH_LONG).show()
+        }
+        finally {
+            try {
+                fos!!.close()
+            }
+            catch (e:IOException) {
+                Toast.makeText(this, "Could not save file", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        return directory.absolutePath
     }
 }
