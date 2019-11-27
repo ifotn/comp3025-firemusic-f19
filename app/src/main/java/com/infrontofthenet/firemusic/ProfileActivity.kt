@@ -22,7 +22,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 //import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile.fabExit
@@ -42,6 +45,8 @@ class ProfileActivity : AppCompatActivity() {
 
     // path to the current photo taken
     var currentPath: String? = null
+
+    val user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // inflate the menu_main to add the items to the toolbar
@@ -90,8 +95,6 @@ class ProfileActivity : AppCompatActivity() {
 
         // enable scrolling on terms textView since it only shows 10 lines at a time
         textViewTerms.movementMethod = ScrollingMovementMethod()
-
-        val user = FirebaseAuth.getInstance().currentUser
 
         user?.let {
             val name = user.displayName
@@ -178,6 +181,7 @@ class ProfileActivity : AppCompatActivity() {
                 var path = saveToInternalStorage(bitmap)
 
                 // try saving to user's profile too
+                saveProfilePhoto(imageUri)
             }
             catch (e:IOException) {
                 Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
@@ -242,5 +246,24 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         return directory.absolutePath
+    }
+
+    // save photo to Firebase profile
+    private fun saveProfilePhoto(imageUri: Uri?) {
+
+        // set up the profile update with the photo uri
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setPhotoUri(imageUri)
+            .build()
+
+        // commit the update to firebase
+        user!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { object: OnCompleteListener<Void?> {
+                override fun onComplete(p0: Task<Void?>) {
+                    if (p0.isSuccessful()) {
+                        Toast.makeText(applicationContext, "Image Saved to Firebase", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }}
     }
 }
